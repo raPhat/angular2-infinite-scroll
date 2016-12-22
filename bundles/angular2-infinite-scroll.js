@@ -156,6 +156,7 @@ System.registerDynamic('src/infinite-scroll', ['@angular/core', './scroller', '.
             this._distanceUp = 1.5;
             this._throttle = 300;
             this._disabled = false;
+            this._container = ''; // container
             this.scrollWindow = true;
             this._immediate = false;
             this._horizontal = false;
@@ -164,6 +165,12 @@ System.registerDynamic('src/infinite-scroll', ['@angular/core', './scroller', '.
             this.scrolledUp = new core_1.EventEmitter();
         }
         InfiniteScroll.prototype.ngOnInit = function () {
+            // if container exist set new container to element
+            if (this._container !== '') {
+                var ele = {};
+                ele.nativeElement = this.element.nativeElement.querySelector(this._container);
+                this.element = ele;
+            }
             if (typeof window !== 'undefined') {
                 var containerElement = this.scrollWindow ? window : this.element;
                 this.scroller = new scroller_1.Scroller(containerElement, setInterval, this.element, this.onScrollDown.bind(this), this.onScrollUp.bind(this), this._distanceDown, this._distanceUp, {}, this._throttle, this._immediate, this._horizontal, this._alwaysCallback, this._disabled, this.positionResolverFactory);
@@ -207,6 +214,7 @@ System.registerDynamic('src/infinite-scroll', ['@angular/core', './scroller', '.
             '_distanceUp': [{ type: core_1.Input, args: ['infiniteScrollUpDistance'] }],
             '_throttle': [{ type: core_1.Input, args: ['infiniteScrollThrottle'] }],
             '_disabled': [{ type: core_1.Input, args: ['infiniteScrollDisabled'] }],
+            '_container': [{ type: core_1.Input, args: ['infiniteScrollContainer'] }],
             'scrollWindow': [{ type: core_1.Input, args: ['scrollWindow'] }],
             '_immediate': [{ type: core_1.Input, args: ['immediateCheck'] }],
             '_horizontal': [{ type: core_1.Input, args: ['horizontal'] }],
